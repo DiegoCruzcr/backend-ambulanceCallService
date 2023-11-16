@@ -20,6 +20,7 @@ class AmbulanceCall:
     completed_at: Optional[str] = None
     estimated_time_of_arrival: Optional[str] = None
     estimated_time_of_completion: Optional[str] = None
+    estimated_distance: Optional[str] = None
 
     def to_dict(self):
         """Return a dictionary representation of the object"""

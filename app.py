@@ -1,7 +1,9 @@
+from datetime import datetime
 import json
 from flask import Flask, request
 import logging
 import os
+from src.clients.matrix_api_client import MatrixApiClient
 from src.domain.models.ambulance import AmbulanceCall
 from src.repository.ambulance_call_repository import AmbulanceCallRepository
 from src.repository.mongo_client import MongoClient
@@ -30,12 +32,12 @@ def call_ambulance():  # put application's code here
         database = MongoClient(config)
         logger.info('database: %s, os: %s', database,
                     os.getenv('MONGO_URI'))
+        
         ambulance_call_repository = AmbulanceCallRepository(database)
 
-        service = AmbulanceCallService(ambulance_call_repository).call_ambulance(ambulance_call)
-        response = {'Created id': str(service)}
+        ambulance_call: dict = AmbulanceCallService(ambulance_call_repository).call_ambulance(ambulance_call)
 
-        return json.dumps(response), 200
+        return json.dumps(ambulance_call), 200
     except Exception as e:
         logging.error('error: %s', e)
         return json.dumps({'error': str(e)}), 500

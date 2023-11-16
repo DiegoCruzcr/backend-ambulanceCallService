@@ -18,11 +18,13 @@ services:
       MONGODB_DATA_DIR: /data/db
       MONDODB_LOG_DIR: /dev/null
 
-  flask-app-prd:
+  flask-app-prd2:
     build: .
     ports:
       - "5000:5000"
     environment:
+      MATRIX_HOMESERVER_URL: "https://maps.googleapis.com"
+      ACCESS_KEY: "AIzaSyCOnA5Aa-si0IFwygTrWyZgzN2kv7-Ezqs"
       MONGO_URI: "mongodb://root:root@mongodb:27017/ambulancecalls?authSource=admin&authMechanism=SCRAM-SHA-1"  # Use the MongoDB container name
       MONGO_DB: "mydatabase"
       MONGO_COLLECTION: "mycollection"
