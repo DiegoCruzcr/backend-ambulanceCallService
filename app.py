@@ -1,6 +1,6 @@
 from datetime import datetime
 import json
-from flask import Flask, request
+from flask import Flask, make_response, request
 import logging
 import os
 from src.clients.matrix_api_client import MatrixApiClient
@@ -37,7 +37,10 @@ def call_ambulance():  # put application's code here
 
         ambulance_call: dict = AmbulanceCallService(ambulance_call_repository).call_ambulance(ambulance_call)
 
-        return json.dumps(ambulance_call), 200
+        r = make_response(json.dumps(ambulance_call), 200)
+        r.headers['Content-Type'] = 'application/json'
+
+        return r
     except Exception as e:
         logging.error('error: %s', e)
         return json.dumps({'error': str(e)}), 500
