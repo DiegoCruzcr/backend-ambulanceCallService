@@ -44,6 +44,31 @@ def call_ambulance():  # put application's code here
     except Exception as e:
         logging.error('error: %s', e)
         return json.dumps({'error': str(e)}), 500
+    
+@app.route('/call/<call_id>', methods=['GET'])
+def get_call(call_id):
+    try:
+        config = {
+            'MONGO_URI': os.getenv('MONGO_URI'),
+            'MONGO_DB': 'ambulancecalls',
+            'MONGO_COLLECTION': 'ambulancecallmanagement'
+        }
+        print(config)
+        database = MongoClient(config)
+        logger.info('database: %s, os: %s', database,
+                    os.getenv('MONGO_URI'))
+        
+        ambulance_call_repository = AmbulanceCallRepository(database)
+
+        ambulance_call: dict = AmbulanceCallService(ambulance_call_repository).get_call(call_id)
+
+        r = make_response(json.dumps(ambulance_call), 200)
+        r.headers['Content-Type'] = 'application/json'
+
+        return r
+    except Exception as e:
+        logging.error('error: %s', e)
+        return json.dumps({'error': str(e)}), 500
 
 @app.route('/')
 def hello_world():

@@ -2,7 +2,6 @@ import pymongo
 
 from src.repository.database import Database
 
-
 class MongoClient(Database):
     def __init__(self, config):
         self._config = config
@@ -24,9 +23,11 @@ class MongoClient(Database):
     def find_by_id(self, ambulance_call_id):
         with self as client:
             db = client[self._config['MONGO_DB']]
-            collection = db[self._config['MONGO_COLLECTION']]
-            return collection.find_one({'ambulance_id': ambulance_call_id})
-        
+            collection = db[self._config['MONGO_COLLECTION']] 
+            result = collection.find_one({'ambulance_id': ambulance_call_id})
+            r = {k: v for k, v in result.items() if k != '_id'}
+            return r 
+            
     def find_all(self):
         with self as client:
             db = client[self._config['MONGO_DB']]

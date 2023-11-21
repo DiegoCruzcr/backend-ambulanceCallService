@@ -21,3 +21,6 @@ class AmbulanceCallService:
 
         self.ambulance_call_repository.save(ambulance_call)
         return ambulance_call.to_dict()
+    
+    def get_call(self, call_id):
+        return self.ambulance_call_repository.find_by_id(call_id)
