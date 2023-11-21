@@ -32,11 +32,10 @@ class MongoClient(Database):
         with self as client:
             db = client[self._config['MONGO_DB']]
             collection = db[self._config['MONGO_COLLECTION']]
-            result = collection.find({})
-            for r in result:
-                r.pop('_id')
+            cursor = collection.find({}, projection={'_id': False})
+            result = [r for r in cursor]
             return result
-        
+
     def delete(self, ambulance_call_id):
         with self as client:
             db = client[self._config['MONGO_DB']]
