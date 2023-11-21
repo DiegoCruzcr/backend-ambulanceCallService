@@ -8,8 +8,10 @@ from src.domain.models.ambulance import AmbulanceCall
 from src.repository.ambulance_call_repository import AmbulanceCallRepository
 from src.repository.mongo_client import MongoClient
 from src.services.ambulance_call_service import AmbulanceCallService
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 logger = logging.getLogger('app')
 logger.setLevel(logging.DEBUG)
