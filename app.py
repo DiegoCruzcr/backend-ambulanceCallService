@@ -19,6 +19,8 @@ logger.setLevel(logging.DEBUG)
 @app.route('/call', methods=['POST', 'OPTIONS'])
 def call_ambulance():  # put application's code here
     try:
+        if request.method == 'OPTIONS':
+            return '', 200
 
         body = request.json
 
@@ -49,6 +51,9 @@ def call_ambulance():  # put application's code here
 @app.route('/call/<call_id>', methods=['GET', 'OPTIONS'])
 def get_call(call_id):
     try:
+        if request.method == 'OPTIONS':
+            return '', 200
+        
         config = {
             'MONGO_URI': os.getenv('MONGO_URI'),
             'MONGO_DB': 'ambulancecalls',
