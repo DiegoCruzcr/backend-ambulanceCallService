@@ -14,7 +14,7 @@ app = Flask(__name__)
 logger = logging.getLogger('app')
 logger.setLevel(logging.DEBUG)
 
-@app.route('/call', methods=['POST'])
+@app.route('/call', methods=['POST', 'OPTIONS'])
 def call_ambulance():  # put application's code here
     try:
 
@@ -48,7 +48,7 @@ def call_ambulance():  # put application's code here
         logging.error('error: %s', e)
         return json.dumps({'error': str(e)}), 500
     
-@app.route('/call/<call_id>', methods=['GET'])
+@app.route('/call/<call_id>', methods=['GET', 'OPTIONS'])
 def get_call(call_id):
     try:
         config = {
