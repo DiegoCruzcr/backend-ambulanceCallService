@@ -39,7 +39,9 @@ def call_ambulance():  # put application's code here
 
         r = make_response(json.dumps(ambulance_call), 200)
         r.headers['Content-Type'] = 'application/json'
-        r.headers['Access-Control-Allow-Origin'] = '*'
+        r.headers.add("Access-Control-Allow-Origin", "*")
+        r.headers.add("Access-Control-Allow-Headers", "*")
+        r.headers.add("Access-Control-Allow-Methods", "*")
 
         return r
     except Exception as e:
@@ -65,7 +67,9 @@ def get_call(call_id):
 
         r = make_response(json.dumps(ambulance_call), 200)
         r.headers['Content-Type'] = 'application/json'
-        r.headers['Access-Control-Allow-Origin'] = '*'
+        r.headers.add("Access-Control-Allow-Origin", "*")
+        r.headers.add("Access-Control-Allow-Headers", "*")
+        r.headers.add("Access-Control-Allow-Methods", "*")
 
         return r
     except Exception as e:
