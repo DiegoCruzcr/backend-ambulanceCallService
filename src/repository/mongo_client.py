@@ -75,8 +75,24 @@ class MongoClient(Database):
         with self as client:
             db = client[self._config['MONGO_DB']]
             collection = db[self._config['MONGO_COLLECTION']]
-            return collection.update_one({'task_id': task_id}, {'$set': task.to_dict()}).modified_count
-        
+            
+            # Create a dictionary representation of the Task object
+            task_dict = task.to_dict()
+
+            # Update the document with both associated_users and other fields
+            update_data = {
+                '$set': {
+                    'associated_users.$': task_dict['associated_users'],
+                    'task_image_url': task_dict['task_image_url'],
+                    'task_name': task_dict['task_name'],
+                    'task_description': task_dict['task_description'],
+                    'updated_at': task_dict['updated_at']
+                }
+            }
+
+            # Update the document using the positional $ operator for the associated_users array
+            return collection.update_one({'task_id': task_id}, update_data).modified_count
+            
     def delete_task(self, task_id):
         pass
         
