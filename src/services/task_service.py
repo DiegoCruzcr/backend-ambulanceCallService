@@ -7,7 +7,7 @@ class TaskService:
         self.task_repository = task_repository
 
     def create_task(self, task: Task) -> dict:
-        return self.task_repository.create_task(task)
+        return task.to_dict()
 
     def list_tasks(self) -> dict:
         return self.task_repository.list_tasks()
