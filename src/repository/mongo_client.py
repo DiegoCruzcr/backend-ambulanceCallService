@@ -49,7 +49,7 @@ class MongoClient(Database):
             collection = db[self._config['MONGO_COLLECTION']]
             return collection.update_one({'ambulance_id': ambulance_call_id}, {'$set': ambulance_call.to_dict()}).modified_count
     
-    def create_task(self, task: Task):
+    def create_task(self, task:):
         with self as client:
             db = client[self._config['MONGO_DB']]
             collection = db[self._config['MONGO_COLLECTION']]
@@ -80,10 +80,10 @@ class MongoClient(Database):
     def delete_task(self, task_id):
         pass
         
-    def get_task_by_associated_user_id(self, user_id):
-        with self as client:
-            db = client[self._config['MONGO_DB']]
-            collection = db[self._config['MONGO_COLLECTION']]
-            result = 
-            r = {k: v for k, v in result.items() if k != '_id'}
-            return r
+    # def get_task_by_associated_user_id(self, user_id):
+    #     with self as client:
+    #         db = client[self._config['MONGO_DB']]
+    #         collection = db[self._config['MONGO_COLLECTION']]
+    #         result = 
+    #         r = {k: v for k, v in result.items() if k != '_id'}
+    #         return r
