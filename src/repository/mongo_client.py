@@ -81,8 +81,12 @@ class MongoClient(Database):
 
             # Update the document with both associated_users and other fields
             update_data = {
+                '$push': {
+                    'associated_users': {
+                        '$each': task_dict['associated_users']
+                    }
+                },
                 '$set': {
-                    'associated_users.$': task_dict['associated_users'],
                     'task_image_url': task_dict['task_image_url'],
                     'task_name': task_dict['task_name'],
                     'task_description': task_dict['task_description'],
