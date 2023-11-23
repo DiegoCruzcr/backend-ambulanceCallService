@@ -49,7 +49,7 @@ class MongoClient(Database):
             collection = db[self._config['MONGO_COLLECTION']]
             return collection.update_one({'ambulance_id': ambulance_call_id}, {'$set': ambulance_call.to_dict()}).modified_count
     
-    def create_task(self, task:):
+    def create_task(self, task: Task):
         with self as client:
             db = client[self._config['MONGO_DB']]
             collection = db[self._config['MONGO_COLLECTION']]
