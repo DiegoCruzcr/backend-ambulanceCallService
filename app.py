@@ -140,8 +140,8 @@ def create_task():
         logging.error('error: %s', e)
         return json.dumps({'error': str(e)}), 500
 
-@app.route('/esg/task', methods=['PUT', 'OPTIONS'])
-def update_task():
+@app.route('/esg/task/<task_id>', methods=['PUT', 'OPTIONS'])
+def update_task(task_id):
     try:
         if request.method == 'OPTIONS':
             return '', 200
@@ -162,7 +162,7 @@ def update_task():
         
         task_repository = TaskRepository(database)
 
-        task: dict = TaskService(task_repository).update_task(task)
+        task: dict = TaskService(task_repository).update_task(task_id, task)
 
         r = make_response(json.dumps(task), 200)
         r.headers['Content-Type'] = 'application/json'
