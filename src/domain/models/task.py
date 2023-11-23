@@ -31,7 +31,7 @@ class Task:
             task_id=task.get('task_id', str(uuid.uuid4())),
             task_name=task.get('task_name'),
             task_description=task.get('task_description'),
-            created_at=task.get('created_at'),
+            created_at=task.get('created_at', datetime.now().isoformat()),
             updated_at=task.get('updated_at'),
             associated_users=task.get('associated_users', [])
         )
