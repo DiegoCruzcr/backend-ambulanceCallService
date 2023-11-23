@@ -147,6 +147,7 @@ def update_task(task_id):
             return '', 200
         
         body = request.json
+        body['task_id'] = task_id
 
         logger.info('request body: %s', body)
 
