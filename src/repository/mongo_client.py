@@ -63,6 +63,14 @@ class MongoClient(Database):
             result = [r for r in cursor]
             return result
         
+    def get_tasks_by_company_id(self, company_id):
+        with self as client:
+            db = client[self._config['MONGO_DB']]
+            collection = db[self._config['MONGO_COLLECTION']]
+            cursor = collection.find({'company_id': company_id}, projection={'_id': False})
+            result = [r for r in cursor]
+            return result
+        
     def get_task(self, task_id):
         with self as client:
             db = client[self._config['MONGO_DB']]

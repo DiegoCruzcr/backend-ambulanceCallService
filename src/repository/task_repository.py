@@ -20,6 +20,11 @@ class TaskRepository:
         task = self.database.get_task(task_id)
 
         return task
+    
+    def get_tasks_by_company_id(self, company_id: str):
+        tasks = self.database.get_tasks_by_company_id(company_id)
+
+        return tasks
 
     def update_task(self, task_id: str, task: Task):
         self.database.update_task(task_id, task)

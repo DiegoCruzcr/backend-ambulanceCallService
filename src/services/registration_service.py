@@ -1,4 +1,5 @@
 from src.repository.registration_repository import RegistrationRepository
+from src.services.task_service import TaskService
 
 
 class RegistrationService:
@@ -15,9 +16,11 @@ class RegistrationService:
         r = body
         return r
     
-    def login(self, body):
+    def login(self, body, task_repository):
         user = self.repository.getUser(body)
         if body['password'] == user['password']:
+            tasks = TaskService(task_repository).get_tasks_by_company_id(user['company_id'])
+            user['tasks'] = tasks
             return user
         else:
             return None

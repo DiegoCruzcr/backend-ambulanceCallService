@@ -16,6 +16,9 @@ class TaskService:
     def get_task_by_id(self, task_id: str) -> dict:
         return self.task_repository.get_task(task_id)
 
+    def get_tasks_by_company_id(self, company_id: str) -> dict:
+        return self.task_repository.get_tasks_by_company_id(company_id)
+
     def update_task(self, task_id: str, task: Task) -> dict:
         self.task_repository.update_task(task_id, task)
         return task.to_dict()
