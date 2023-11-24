@@ -266,7 +266,6 @@ def signUpCompany():
         body['company_id'] = str(uuid.uuid4())
 
         logger.info('request body: %s', body)
-        # os.environ['MONGO_URI'] = 'mongodb://root:root@mongodb:27017/ambulancecalls?authSource=admin&authMechanism=SCRAM-SHA-1'
         config = {
             'MONGO_URI': os.getenv('MONGO_URI'),
             'MONGO_DB': 'esg',
@@ -278,11 +277,9 @@ def signUpCompany():
 
         repository = RegistrationRepository(database)
 
-        response = RegistrationService(repository).signUpCompany(body)
+        RegistrationService(repository).signUpCompany(body)
 
-        r = make_response(json.dumps(body), 200)
-        r.headers['Content-Type'] = 'application/json'
-        return r
+        return 'Created', 201
     except Exception as e:
         logging.error('error: %s', e)
         return json.dumps({'error': str(e)}), 500
