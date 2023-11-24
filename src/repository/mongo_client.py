@@ -118,15 +118,17 @@ class MongoClient(Database):
         with self as client:
             db = client[self._config['MONGO_DB']]
             collection = db[self._config['MONGO_COLLECTION']]
-            
-            return collection.find_one({'company_name': body['company_name']})
+            result = collection.find_one({'company_name': body['company_name']})
+            r = {k: v for k, v in result.items() if k != '_id'}
+            return r
         
     def getUser(self, body):
         with self as client:
             db = client[self._config['MONGO_DB']]
             collection = db[self._config['MONGO_COLLECTION']]
-            
-            return collection.find_one({'user_name': body['user_name']})
+            result = collection.find_one({'user_name': body['user_name']})
+            r = {k: v for k, v in result.items() if k != '_id'}
+            return r
 
     # def get_task_by_associated_user_id(self, user_id):
     #     with self as client:

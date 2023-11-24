@@ -6,10 +6,14 @@ class RegistrationService:
         self.repository = repository
 
     def signUpCompany(self, body):
-        return self.repository.signUpCompany(body)
+        self.repository.signUpCompany(body)
+        r = body
+        return r
     
     def signUpUser(self, body):
-        return self.repository.signUpUser(body)
+        self.repository.signUpUser(body)
+        r = body
+        return r
     
     def login(self, body):
         user = self.repository.getCompanyUser(body)
