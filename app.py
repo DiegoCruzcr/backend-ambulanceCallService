@@ -334,7 +334,7 @@ def login():
 
         user = RegistrationService(repository).login(body)
         response = make_response(json.dumps(user), 200)
-
+        response.headers['Content-Type'] = 'application/json'
         if user:
             return response
         else:
@@ -364,6 +364,8 @@ def loginCompany():
         repository = RegistrationRepository(database)
 
         user = RegistrationService(repository).loginCompany(body)
+        r = make_response(json.dumps(user), 200)
+        r.headers['Content-Type'] = 'application/json'
 
         if user:
             return json.dumps(user), 200
