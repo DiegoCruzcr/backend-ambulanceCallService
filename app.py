@@ -333,9 +333,10 @@ def login():
         repository = RegistrationRepository(database)
 
         user = RegistrationService(repository).login(body)
+        response = make_response(json.dumps(user), 200)
 
         if user:
-            return json.dumps(user), 200
+            return response
         else:
             return 'Unauthorized', 401
     except Exception as e:
