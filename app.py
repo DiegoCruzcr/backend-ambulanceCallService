@@ -368,7 +368,7 @@ def loginCompany():
         r.headers['Content-Type'] = 'application/json'
 
         if user:
-            return json.dumps(user), 200
+            return r
         else:
             return 'Unauthorized', 401
     except Exception as e:
