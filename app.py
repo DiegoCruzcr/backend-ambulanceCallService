@@ -8,9 +8,11 @@ from src.domain.models.ambulance import AmbulanceCall
 from src.domain.models.task import Task
 from src.repository.ambulance_call_repository import AmbulanceCallRepository
 from src.repository.mongo_client import MongoClient
+from src.repository.registration_repository import RegistrationRepository
 from src.repository.task_repository import TaskRepository
 from src.services.ambulance_call_service import AmbulanceCallService
 from flask_cors import CORS
+from src.services.registration_service import RegistrationService
 
 from src.services.task_service import TaskService
 
@@ -248,6 +250,36 @@ def delete_task(task_id):
         r = make_response(json.dumps(task), 200)
         r.headers['Content-Type'] = 'application/json'
 
+        return r
+    except Exception as e:
+        logging.error('error: %s', e)
+        return json.dumps({'error': str(e)}), 500
+    
+@app.route('/signUpCompany', methods=['POST', 'OPTIONS'])
+def signUpCompany():
+    try:
+        if request.method == 'OPTIONS':
+            return '', 200
+        
+        body = request.json
+
+        logger.info('request body: %s', body)
+
+        config = {
+            'MONGO_URI': os.getenv('MONGO_URI'),
+            'MONGO_DB': 'esg',
+            'MONGO_COLLECTION': 'companyusermanagement'
+        }
+        database = MongoClient(config)
+        logger.info('database: %s, os: %s', database,
+                    os.getenv('MONGO_URI'))
+
+        repository = RegistrationRepository(database)
+
+        response = RegistrationService(repository).signUpCompany(body)
+
+        r = make_response(json.dumps(response), 200)
+        r.headers['Content-Type'] = 'application/json'
         return r
     except Exception as e:
         logging.error('error: %s', e)

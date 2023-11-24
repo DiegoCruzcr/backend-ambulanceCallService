@@ -100,6 +100,34 @@ class MongoClient(Database):
     def delete_task(self, task_id):
         pass
         
+    def signUpCompany(self, body):
+        with self as client:
+            db = client[self._config['MONGO_DB']]
+            collection = db[self._config['MONGO_COLLECTION']]
+            
+            return collection.insert_one(body).inserted_id
+        
+    def signUpUser(self, body):
+        with self as client:
+            db = client[self._config['MONGO_DB']]
+            collection = db[self._config['MONGO_COLLECTION']]
+            
+            return collection.insert_one(body).inserted_id
+        
+    def getCompany(self, body):
+        with self as client:
+            db = client[self._config['MONGO_DB']]
+            collection = db[self._config['MONGO_COLLECTION']]
+            
+            return collection.find_one({'company_name': body['company_name']})
+        
+    def getUser(self, body):
+        with self as client:
+            db = client[self._config['MONGO_DB']]
+            collection = db[self._config['MONGO_COLLECTION']]
+            
+            return collection.find_one({'user_name': body['user_name']})
+
     # def get_task_by_associated_user_id(self, user_id):
     #     with self as client:
     #         db = client[self._config['MONGO_DB']]
