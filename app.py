@@ -263,7 +263,6 @@ def signUpCompany():
             return '', 200
         
         body = request.json
-        body['company_id'] = str(uuid.uuid4())
 
         logger.info('request body: %s', body)
         config = {
