@@ -280,7 +280,7 @@ def signUpCompany():
 
         response = RegistrationService(repository).signUpCompany(body)
 
-        r = make_response(json.dumps(response), 200)
+        r = make_response(json.dumps(body), 200)
         r.headers['Content-Type'] = 'application/json'
         return r
     except Exception as e:
