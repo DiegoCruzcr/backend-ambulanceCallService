@@ -16,7 +16,7 @@ class RegistrationService:
         return r
     
     def login(self, body):
-        user = self.repository.getCompanyUser(body)
+        user = self.repository.getUser(body)
         if body['password'] == user['password']:
             return user
         else:
