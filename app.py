@@ -1,5 +1,6 @@
 from datetime import datetime
 import json
+import uuid
 from flask import Flask, make_response, request
 import logging
 import os
@@ -262,6 +263,7 @@ def signUpCompany():
             return '', 200
         
         body = request.json
+        body['company_id'] = str(uuid.uuid4())
 
         logger.info('request body: %s', body)
 
