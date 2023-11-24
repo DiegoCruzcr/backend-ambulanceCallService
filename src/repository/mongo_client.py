@@ -105,7 +105,9 @@ class MongoClient(Database):
             db = client[self._config['MONGO_DB']]
             collection = db[self._config['MONGO_COLLECTION']]
             
-            return collection.insert_one(body).inserted_id
+            result = collection.insert_one(body).inserted_id
+            print(result)
+            return result
         
     def signUpUser(self, body):
         with self as client:
