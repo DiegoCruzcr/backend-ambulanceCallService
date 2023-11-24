@@ -370,7 +370,7 @@ def loginCompany():
             return 'Unauthorized', 401
     except Exception as e:
         logging.error('error: %s', e)
-        return json.dumps({'error': str(e)}), 500]
+        return json.dumps({'error': str(e)}), 500
 
 @app.route('/')
 def hello_world():
