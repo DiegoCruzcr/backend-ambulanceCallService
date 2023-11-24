@@ -266,7 +266,7 @@ def signUpCompany():
         body['company_id'] = str(uuid.uuid4())
 
         logger.info('request body: %s', body)
-        os.environ['MONGO_URI'] = 'mongodb://root:root@mongodb:27017/ambulancecalls?authSource=admin&authMechanism=SCRAM-SHA-1'
+        # os.environ['MONGO_URI'] = 'mongodb://root:root@mongodb:27017/ambulancecalls?authSource=admin&authMechanism=SCRAM-SHA-1'
         config = {
             'MONGO_URI': os.getenv('MONGO_URI'),
             'MONGO_DB': 'esg',

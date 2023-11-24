@@ -109,6 +109,7 @@ class MongoClient(Database):
             print(result)
             return result
         
+        
     def signUpUser(self, body):
         with self as client:
             db = client[self._config['MONGO_DB']]

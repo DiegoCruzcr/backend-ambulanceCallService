@@ -3,7 +3,9 @@ class RegistrationRepository:
         self.db = db
 
     def signUpCompany(self, body):
-        return self.db.signUpCompany(body)
+        self.db.signUpCompany(body)
+        r = body
+        return r
     
     def signUpUser(self, body):
         return self.db.signUpUser(body)
