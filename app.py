@@ -284,6 +284,94 @@ def signUpCompany():
         logging.error('error: %s', e)
         return json.dumps({'error': str(e)}), 500
     
+@app.route('/signUpUser', methods=['POST', 'OPTIONS'])
+def signUpUser():
+    try:
+        if request.method == 'OPTIONS':
+            return '', 200
+        
+        body = request.json
+        body['user_id'] = str(uuid.uuid4())
+
+        logger.info('request body: %s', body)
+        config = {
+            'MONGO_URI': os.getenv('MONGO_URI'),
+            'MONGO_DB': 'esg',
+            'MONGO_COLLECTION': 'companyusermanagement'
+        }
+        database = MongoClient(config)
+        logger.info('database: %s, os: %s', database,
+                    os.getenv('MONGO_URI'))
+
+        repository = RegistrationRepository(database)
+
+        RegistrationService(repository).signUpUser(body)
+
+        return 'Created', 201
+    except Exception as e:
+        logging.error('error: %s', e)
+        return json.dumps({'error': str(e)}), 500
+
+@app.route('/login', methods=['POST', 'OPTIONS'])
+def login():
+    try:
+        if request.method == 'OPTIONS':
+            return '', 200
+        
+        body = request.json
+
+        logger.info('request body: %s', body)
+        config = {
+            'MONGO_URI': os.getenv('MONGO_URI'),
+            'MONGO_DB': 'esg',
+            'MONGO_COLLECTION': 'companyusermanagement'
+        }
+        database = MongoClient(config)
+        logger.info('database: %s, os: %s', database,
+                    os.getenv('MONGO_URI'))
+
+        repository = RegistrationRepository(database)
+
+        user = RegistrationService(repository).login(body)
+
+        if user:
+            return json.dumps(user), 200
+        else:
+            return 'Unauthorized', 401
+    except Exception as e:
+        logging.error('error: %s', e)
+        return json.dumps({'error': str(e)}), 500
+    
+@app.route('/loginCompany', methods=['POST', 'OPTIONS'])
+def loginCompany():
+    try:
+        if request.method == 'OPTIONS':
+            return '', 200
+        
+        body = request.json
+
+        logger.info('request body: %s', body)
+        config = {
+            'MONGO_URI': os.getenv('MONGO_URI'),
+            'MONGO_DB': 'esg',
+            'MONGO_COLLECTION': 'companyusermanagement'
+        }
+        database = MongoClient(config)
+        logger.info('database: %s, os: %s', database,
+                    os.getenv('MONGO_URI'))
+
+        repository = RegistrationRepository(database)
+
+        user = RegistrationService(repository).loginCompany(body)
+
+        if user:
+            return json.dumps(user), 200
+        else:
+            return 'Unauthorized', 401
+    except Exception as e:
+        logging.error('error: %s', e)
+        return json.dumps({'error': str(e)}), 500]
+
 @app.route('/')
 def hello_world():
     return 'Hello, 7777!'
